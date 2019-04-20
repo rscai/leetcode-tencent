@@ -81,3 +81,15 @@ gradle-app.setting
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+## Gitbook
+
+/docs/node_modules/
+/docs/_book/
+/docs/assets/
+
+## ignore generated content under zh_CN, except README.md and SUMMARY.md
+
+/docs/zh_CN/*
+!/docs/zh_CN/README.md
+!/docs/zh_CN/SUMMARY.md
