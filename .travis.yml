@@ -10,12 +10,7 @@ before_install:
   - sudo apt-get install python3-pip
   - sudo apt-get install graphviz
 install:
-  - pip3 install --user hanziconv
-  - npm install gitbook-cli -g
-  - cd docs
-  - npm install safe-buffer
-  - cd ..
-  - gitbook install docs
+
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -28,7 +23,15 @@ jobs:
     - stage: test
       script: ./gradlew check
     - stage: build_docs
-      script:  cp -r docs/zh_TR/* docs/zh_CN/ && python3 .travis/generate-zh_CN.py -o docs/zh_CN -s docs/zh_TR && gitbook build docs
+      script:
+      - pip3 install --user hanziconv
+      - npm install gitbook-cli -g
+      - cd docs
+      - npm install safe-buffer
+      - cd ..
+      - gitbook install docs
+      #- cp -r docs/zh_TR/* docs/zh_CN/ && python3 .travis/generate-zh_CN.py -o docs/zh_CN -s docs/zh_TR && gitbook build docs
+      - gitbook build docs
       deploy:
         provider: pages
         skip-cleanup: true
