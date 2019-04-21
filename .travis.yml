@@ -1,13 +1,11 @@
 language: java
 jdk:
   - openjdk8
-python: "3.7"
 node_js: "7"
 dist: xenial
 before_install:
   - sudo apt-get install graphviz
-install:
-
+  - pyenv global 3.7
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -27,7 +25,7 @@ jobs:
       - npm install safe-buffer
       - cd ..
       - gitbook install docs
-      - cp -r docs/zh_TR/* docs/zh_CN/ && python3 .travis/generate-zh_CN.py -o docs/zh_CN -s docs/zh_TR && gitbook build docs
+      - cp -r docs/zh_TR/* docs/zh_CN/ && python .travis/generate-zh_CN.py -o docs/zh_CN -s docs/zh_TR && gitbook build docs
       #- gitbook build docs
       deploy:
         provider: pages
