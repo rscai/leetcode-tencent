@@ -5,7 +5,6 @@ python: "3.7"
 node_js: "7"
 dist: xenial
 before_install:
-  - sudo apt-get install python3-pip
   - sudo apt-get install graphviz
 install:
 
@@ -22,7 +21,7 @@ jobs:
       script: ./gradlew check
     - stage: build_docs
       script:
-      - pip3 install --user hanziconv
+      - pip3 install hanziconv
       - npm install gitbook-cli -g
       - cd docs
       - npm install safe-buffer
