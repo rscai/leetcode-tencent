@@ -4,8 +4,15 @@ jdk:
 node_js: "7"
 dist: xenial
 before_install:
-  - sudo apt-get install graphviz
   - pyenv global 3.7
+install:
+  - sudo apt-get install graphviz
+  - pip install hanziconv
+  - npm install gitbook-cli -g
+  - cd docs
+  - npm install safe-buffer
+  - cd ..
+  - gitbook install docs
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -16,17 +23,11 @@ cache:
 jobs:
   include:
     - stage: test
+      install: skip
       script: ./gradlew check
     - stage: build_docs
       script:
-      - pip install hanziconv
-      - npm install gitbook-cli -g
-      - cd docs
-      - npm install safe-buffer
-      - cd ..
-      - gitbook install docs
       - cp -r docs/zh_TR/* docs/zh_CN/ && python .travis/generate-zh_CN.py -o docs/zh_CN -s docs/zh_TR && gitbook build docs
-      #- gitbook build docs
       deploy:
         provider: pages
         skip-cleanup: true
