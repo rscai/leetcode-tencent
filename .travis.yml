@@ -21,7 +21,7 @@ jobs:
       script: ./gradlew check
     - stage: build_docs
       script:
-      - pip3 install hanziconv
+      - pip install hanziconv
       - npm install gitbook-cli -g
       - cd docs
       - npm install safe-buffer
